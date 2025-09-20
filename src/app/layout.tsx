@@ -32,6 +32,7 @@ export default function RootLayout({
       appearance={{
         baseTheme: dark,
       }}
+      
     >
       <html lang="en">
         <body
@@ -39,6 +40,7 @@ export default function RootLayout({
         >
           <Nav />
           {children}
+          
           <Footer />
         </body>
       </html>
