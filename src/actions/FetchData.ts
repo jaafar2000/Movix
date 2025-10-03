@@ -60,7 +60,8 @@ export async function getMovieDetails(id: string) {
 export async function fetchMovieTrailer(id: string) {
   const data = await tmdbFetch(`/movie/${id}/videos`, { language: "en-US" });
   return data.results.find(
-    (video: {site: string, type:string}) => video.type === "Trailer" && video.site === "YouTube"
+    (video: { site: string; type: string }) =>
+      video.type === "Trailer" && video.site === "YouTube"
   );
 }
 
@@ -105,7 +106,8 @@ export async function getTvShowDetails(id: string) {
 export async function fetchTvShowTrailer(id: string) {
   const data = await tmdbFetch(`/tv/${id}/videos`, { language: "en-US" });
   return data.results.find(
-      (video: {site: string, type:string} ) => video.type === "Trailer" && video.site === "YouTube"
+    (video: { site: string; type: string }) =>
+      video.type === "Trailer" && video.site === "YouTube"
   );
 }
 
@@ -120,3 +122,27 @@ export const searchMovies = async (type: string, query: string) => {
   const data = await res.json();
   return data.results;
 };
+
+export async function getTvShowDetailsSeasons(tvId: string | number) {
+  try {
+    return tmdbFetch(`/tv/${tvId}`, { language: "en-US" });
+  } catch (error) {
+    console.error("Failed to fetch TV show details:", error);
+    return null;
+  }
+}
+
+export async function getTvSeasonEpisodes(
+  tvId: string | number,
+  seasonNumber: number
+) {
+  try {
+    const data = await tmdbFetch(`/tv/${tvId}/season/${seasonNumber}`, {
+      language: "en-US",
+    });
+    return data.episodes;
+  } catch (error) {
+    console.error("Failed to fetch season episodes:", error);
+    return [];
+  }
+}

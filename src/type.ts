@@ -75,3 +75,20 @@ export interface Movie {
   runtime?: number;
   reviewsCount?: number;
 }
+export interface season {
+  season_number: number;
+  poster_path: string;
+
+  name: string;
+  episode_count: number;
+  id: number;
+}
+
+export interface episodes {
+  id: number;
+  still_path: string;
+  episode_number: number;
+  name: string;
+  overview: string;
+  air_date: string;
+}

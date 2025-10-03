@@ -112,23 +112,6 @@ const Reviews = ({ showId, type }: Props) => {
                 </div>
               ))}
             </div>
-
-            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <button
-                onClick={() => scroll("left")}
-                className="pointer-events-auto text-white cursor-pointer bg-black/50 rounded-full p-2 hover:bg-black/80 transition-colors"
-                aria-label="Scroll left"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={() => scroll("right")}
-                className="pointer-events-auto text-white cursor-pointer bg-black/50 rounded-full p-2 hover:bg-black/80 transition-colors"
-                aria-label="Scroll right"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
           </div>
         ) : (
           <p className="text-[var(--color-cgray)]">No reviews available.</p>

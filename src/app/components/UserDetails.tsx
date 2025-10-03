@@ -10,10 +10,13 @@ import { useUser } from "@clerk/nextjs";
 interface Props {
   user?: User;
 }
+import { useClerk } from "@clerk/nextjs";
 
 const TABS = ["Watchlist", "Favourites", "Watched", "Reviews"];
 
 const UserDetails = ({ user }: Props) => {
+  const { openUserProfile } = useClerk();
+
   const { user: currentUser } = useUser();
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [activeTab, setActiveTab] = useState("Watchlist");
@@ -103,11 +106,19 @@ const UserDetails = ({ user }: Props) => {
         </div>
         <div className="ml-auto">
           {isCurrentUser && (
-            <SignOutButton>
-              <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-                Sign Out
+            <div className="flex gap-1.5" >
+              <button
+                onClick={() => openUserProfile()}
+                className="px-4 py-2 rounded bg-cgreen text-white"
+              >
+                Edit Profile
               </button>
-            </SignOutButton>
+              <SignOutButton>
+                <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                  Sign Out
+                </button>
+              </SignOutButton>
+            </div>
           )}
         </div>
       </div>

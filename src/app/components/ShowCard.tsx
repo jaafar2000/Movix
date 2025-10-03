@@ -7,12 +7,12 @@ interface ShowCardProps {
   id?: number | string;
   name?: string;
   type?: string;
-  poster_path?: string; // for ListSection
-  image_url?: string; // for UserDetails
+  poster_path?: string;
+  image_url?: string;
   overview?: string;
   vote_average?: number;
   createdAt?: string | Date;
-  route?: string; // optional route for linking
+  route?: string;
 }
 
 const ShowCard = ({
@@ -55,13 +55,15 @@ const ShowCard = ({
         </Link>
       ) : (
         <div className="relative cursor-pointer group rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-          <Image
-            src={imageSrc}
-            alt={name || "Show"}
-            width={500}
-            height={750}
-            className="object-cover h-auto w-full"
-          />
+          <Link href={`show/${route}/${id}`} className="block group">
+            <Image
+              src={imageSrc}
+              alt={name || "Show"}
+              width={500}
+              height={750}
+              className="object-cover h-auto w-full"
+            />
+          </Link>
           {type && (
             <div className="absolute inset-0 bg-black/50 transition-transform duration-300 translate-y-full group-hover:translate-y-0 flex items-end p-2 opacity-0 group-hover:opacity-100">
               <p className="text-white text-sm font-medium">{type}</p>
@@ -70,9 +72,7 @@ const ShowCard = ({
         </div>
       )}
 
-      <div className=" p-2 font-bold text-sm truncate">
-        {name}
-      </div>
+      <div className=" p-2 font-bold text-sm truncate">{name}</div>
 
       <div className="flex justify-between items-center text-xs text-[#667788] mt-1">
         {vote_average && <span>⭐ {vote_average.toFixed(1)}/10</span>}

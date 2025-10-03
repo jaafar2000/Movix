@@ -8,6 +8,7 @@ import {
   fetchTrending,
 } from "@/actions/actions";
 import ListSection from "../components/ListSection";
+import { Loader } from "lucide-react";
 
 const Page = () => {
   const [topMovies, setTopMovies] = useState<[]>([]);
@@ -25,6 +26,9 @@ const Page = () => {
     fetch();
   }, []);
 
+  if (!topMovies.length || !nowPlaying.length || !upcomings.length) {
+    return <Loader />;
+  }
   return (
     <div className="min-h-screen p-4">
       <p className="text-cgray text-center uppercase my-5 text-xl md:text-2xl px-4">

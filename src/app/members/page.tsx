@@ -104,6 +104,8 @@ const Page = () => {
                 <Image
                   src={u.image_url}
                   alt={u.username}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
