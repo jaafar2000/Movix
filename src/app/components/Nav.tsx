@@ -5,7 +5,7 @@ import { useUser, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Search, Menu, X } from "lucide-react";
 
 const Nav = () => {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const [activeTab, setActiveTab] = useState("reviews");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,35 +22,41 @@ const Nav = () => {
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
-  // Desktop & Mobile Links
   const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className={`flex ${isMobile ? "flex-col items-start gap-6" : "flex-row items-center gap-6"}`}>
-      {/* Profile link */}
+    <div
+      className={`flex ${
+        isMobile ? "flex-col items-start gap-6" : "flex-row items-center gap-6"
+      }`}
+    >
       <Link
         href="/profile"
         onClick={() => {
           setActiveTab("profile");
           closeMenu();
         }}
-        className={`${activeTab === "profile" ? activeStyle : defaultStyle} ${hoverStyle} ${isMobile ? "text-2xl" : "text-lg"}`}
+        className={`${activeTab === "profile" ? activeStyle : defaultStyle} ${hoverStyle} ${
+          isMobile ? "text-2xl" : "text-lg"
+        }`}
       >
         Profile
       </Link>
 
-      {/* Search link */}
       <Link
         href="/search"
         onClick={() => {
           setActiveTab("search");
           closeMenu();
         }}
-        className={`${activeTab === "search" ? activeStyle : defaultStyle} ${hoverStyle} ${isMobile ? "text-2xl flex items-center gap-2" : "text-lg flex items-center gap-1"}`}
+        className={`${activeTab === "search" ? activeStyle : defaultStyle} ${hoverStyle} ${
+          isMobile
+            ? "text-2xl flex items-center gap-2"
+            : "text-lg flex items-center gap-1"
+        }`}
       >
         <Search size={isMobile ? 28 : 20} />
         {isMobile && "Search"}
       </Link>
 
-      {/* Other nav items */}
       {navItems.map((item) => (
         <Link
           key={item.key}
@@ -59,7 +65,9 @@ const Nav = () => {
             setActiveTab(item.key);
             closeMenu();
           }}
-          className={`${item.key === activeTab ? activeStyle : defaultStyle} ${hoverStyle} ${isMobile ? "text-2xl" : "text-lg"}`}
+          className={`${item.key === activeTab ? activeStyle : defaultStyle} ${hoverStyle} ${
+            isMobile ? "text-2xl" : "text-lg"
+          }`}
         >
           {item.label}
         </Link>
@@ -80,10 +88,11 @@ const Nav = () => {
           <span className="font-sans font-normal text-3xl">Movix</span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <NavLinks />
-        </div>
+        {isSignedIn && (
+          <div className="hidden md:flex items-center gap-8">
+            <NavLinks />
+          </div>
+        )}
 
         {/* Mobile Menu Button */}
         <button
@@ -99,10 +108,8 @@ const Nav = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 w-full h-screen bg-black z-40 flex flex-col pt-20 px-8 gap-8">
-          {/* Links */}
-          <NavLinks isMobile />
+          {isSignedIn && <NavLinks isMobile />}
 
-          {/* Auth Buttons */}
           <SignedOut>
             <div className="mt-6 flex flex-col items-start gap-5 w-full">
               <SignInButton mode="modal">
