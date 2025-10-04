@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import { useUser, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
@@ -6,7 +7,7 @@ import { Search, Menu, X } from "lucide-react";
 
 const Nav = () => {
   const { isSignedIn } = useUser();
-  const [activeTab, setActiveTab] = useState("reviews");
+  const [activeTab, setActiveTab] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -28,18 +29,20 @@ const Nav = () => {
         isMobile ? "flex-col items-start gap-6" : "flex-row items-center gap-6"
       }`}
     >
-      <Link
-        href="/profile"
-        onClick={() => {
-          setActiveTab("profile");
-          closeMenu();
-        }}
-        className={`${activeTab === "profile" ? activeStyle : defaultStyle} ${hoverStyle} ${
-          isMobile ? "text-2xl" : "text-lg"
-        }`}
-      >
-        Profile
-      </Link>
+      {isSignedIn && (
+        <Link
+          href="/profile"
+          onClick={() => {
+            setActiveTab("profile");
+            closeMenu();
+          }}
+          className={`${
+            activeTab === "profile" ? activeStyle : defaultStyle
+          } ${hoverStyle} ${isMobile ? "text-2xl" : "text-lg"}`}
+        >
+          Profile
+        </Link>
+      )}
 
       <Link
         href="/search"
@@ -47,7 +50,9 @@ const Nav = () => {
           setActiveTab("search");
           closeMenu();
         }}
-        className={`${activeTab === "search" ? activeStyle : defaultStyle} ${hoverStyle} ${
+        className={`${
+          activeTab === "search" ? activeStyle : defaultStyle
+        } ${hoverStyle} ${
           isMobile
             ? "text-2xl flex items-center gap-2"
             : "text-lg flex items-center gap-1"
@@ -65,9 +70,9 @@ const Nav = () => {
             setActiveTab(item.key);
             closeMenu();
           }}
-          className={`${item.key === activeTab ? activeStyle : defaultStyle} ${hoverStyle} ${
-            isMobile ? "text-2xl" : "text-lg"
-          }`}
+          className={`${
+            item.key === activeTab ? activeStyle : defaultStyle
+          } ${hoverStyle} ${isMobile ? "text-2xl" : "text-lg"}`}
         >
           {item.label}
         </Link>
@@ -88,11 +93,10 @@ const Nav = () => {
           <span className="font-sans font-normal text-3xl">Movix</span>
         </Link>
 
-        {isSignedIn && (
-          <div className="hidden md:flex items-center gap-8">
-            <NavLinks />
-          </div>
-        )}
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          <NavLinks />
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -108,11 +112,11 @@ const Nav = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 w-full h-screen bg-black z-40 flex flex-col pt-20 px-8 gap-8">
-          {isSignedIn && <NavLinks isMobile />}
+          <NavLinks isMobile />
 
           <SignedOut>
             <div className="mt-6 flex flex-col items-start gap-5 w-full">
-              <SignInButton mode="modal">
+              <SignInButton mode="modal" >
                 <button className="hover:text-white border border-cgray rounded py-2 px-4 text-2xl w-full text-left">
                   SIGN IN
                 </button>
